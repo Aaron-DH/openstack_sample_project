@@ -1,0 +1,56 @@
+[DEFAULT]
+debug = True
+auth_strategy=keystone
+
+[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_user = admin
+admin_password = password
+admin_tenant_name = admin
+
+[database]
+connection = mysql+pymysql://root:password@127.0.0.1/report?charset=utf8
+max_retries = 3
+
+[report_file]
+logo_path = /usr/share/report/logo/haiyun.png
+pic_path = /tmp/report
+rptfile_path = /var/www/html/rptfiles/
+local_url = "http://127.0.0.1/"
+
+[email]
+from_mail = dinghh@awcloud.com
+password = XXXXXXX
+smtp_server = smtp.qq.com
+
+[admininfo]
+username = admin
+password = openstack
+tenantName = admin
+tenantID = ba72a14320da44a3923eae6f45db81d6
+
+[keystone]
+endpoint = http://127.0.0.1:5000
+
+[nova]
+endpoint = http://127.0.0.01:8774
+
+[zeus]
+endpoint = http://127.0.0.1:8888
+
+[influxdb]
+influxdb_url = influxdb://127.0.0.1:8086/diamond
+
+[oslo_messaging_rabbit]
+rabbit_userid = stackrabbit
+rabbit_password = openstack
+rabbit_hosts = 127.0.0.1
+
+[apscheduler]
+misfire_grace_time = 1800
+coalesce = False
+max_instances = 100
+ThreadPoolExecutor = 12
+ProcessPoolExecutor = 4

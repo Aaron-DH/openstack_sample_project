@@ -1,0 +1,167 @@
+import time
+import datetime
+import calendar
+import json
+import cStringIO
+import urllib2
+import Image as SOImage
+from reportlab.platypus import Image
+from reportlab.lib.units import mm
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.lib.pagesizes import A4
+from report.storage import impl_influxdb
+from oslo_config import cfg
+from oslo_log import log
+
+LOG = log.getLogger(__name__)
+
+REPORT_INTERVAL = {
+    'day': 24 * 60 * 60,
+    'week': 7 * 24 * 60 * 60,
+    'month': calendar.monthrange(datetime.datetime.now().year,
+                                 datetime.datetime.now()
+                                 .month)[1] * 24 * 60 * 60
+}
+CONF = cfg.CONF
+
+
+def get_image_size(url):
+    if "/" in url:
+        file = urllib2.urlopen(url)
+        Im = cStringIO.StringIO(file.read())
+        img = SOImage.open(Im)
+    else:
+        img = SOImage.open(url)
+    return img.size
+
+
+class Task(object):
+    def __init__(self, report_task):
+        self.task_id = report_task.rpttask_id
+        self.task_name = report_task.rpttask_name
+        self.task_type = report_task.rpttask_type
+        self.task_time = json.loads(report_task.rpttask_time)
+        self.task_interval_str = report_task.rpttask_interval
+        self.task_interval = report_task.rpttask_interval
+        self.task_content = json.loads(report_task.rpttask_content)
+        self.task_metadata = report_task.rpttask_metadata
+        self.delay_time = None
+        self.conn = impl_influxdb.Connection(CONF.database.meter_connection)
+        '''
+        The following two parameters are used to calculate the interval time.
+        '''
+        self.task_timestamp = time.\
+            mktime(time.strptime(self.task_time['time'], '%H:%M:%S'))
+        self.now_timestamp = time.\
+            mktime(time.strptime(time.strftime('%H:%M:%S'), '%H:%M:%S'))
+        # import pdb
+        # pdb.set_trace()
+        self._get_task_interval()
+
+    def _daily_report(self):
+        delta = self.task_timestamp - self.now_timestamp
+        if delta > 0:
+            self.delay_time = delta
+        else:
+            self.delay_time = REPORT_INTERVAL['day'] + delta
+        self.task_interval = REPORT_INTERVAL['day']
+
+    def _weekly_report(self):
+        task_weekday = int(self.task_time['weekday'])
+        weekly_task_timestamp = task_weekday * \
+        REPORT_INTERVAL['day'] + self.task_timestamp
+        now_weekday = datetime.datetime.now().weekday()
+        weekly_now_timestamp = now_weekday * \
+        REPORT_INTERVAL['day'] + self.now_timestamp
+        delta = weekly_task_timestamp - weekly_now_timestamp
+        if delta > 0:
+            self.delay_time = delta
+        else:
+            self.delay_time = REPORT_INTERVAL['week'] + delta
+        self.task_interval = REPORT_INTERVAL['week']
+
+    def _monthly_report(self):
+        task_day = int(self.task_time['date'][-2:])
+        now_day = datetime.datetime.now().day
+        delta = (task_day - now_day) * \
+        REPORT_INTERVAL['day'] + (self.task_timestamp - self.now_timestamp)
+        if delta > 0:
+            self.delay_time = delta
+        else:
+            self.delay_time = REPORT_INTERVAL['month'] + delta
+        self.task_interval = REPORT_INTERVAL['month']
+
+    def _get_task_interval(self):
+        '''
+        calculate the interval time of the task
+        :return:None
+        '''
+        if self.task_interval == 'day':
+            self._daily_report()
+        elif self.task_interval == 'week':
+            self._weekly_report()
+        elif self.task_interval == 'month':
+            self._monthly_report()
+        else:
+            LOG.debug("%s is an unexpected type!" % self.task_interval)
+
+    def _get_time_bucket(self):
+        '''
+        Get the start time and the end for query
+        :return:{
+            "time":"",
+            "time_s":"",
+            "time_e":""
+        }
+        '''
+        if self.task_interval_str == 'day':
+            return {
+                "time_s": str(datetime.date.today() - datetime.timedelta(days=1)),
+                "time_e": str(datetime.date.today())
+            }
+        elif self.task_interval_str == 'week':
+            date = datetime.date.today()
+            weekday = datetime.datetime.now().weekday()
+            return {"time_s": str(date - datetime.timedelta(days=weekday)),
+                    "time_e": str(date + datetime.timedelta(days=7-weekday)),
+                    }
+        elif self.task_interval_str == 'month':
+            year = datetime.datetime.now().year
+            last_month = datetime.datetime.now().month - 1 or 12
+            last_month_last_day = calendar.monthrange(year,last_month)[1]
+            last_month_today = datetime.datetime.now() - datetime.timedelta(days=last_month_last_day)
+
+            return {"time_s": str(last_month_today.replace(day=1)),
+                    "time_e": str(last_month_today.replace(day=last_month_last_day))
+                    }
+
+    def start(self):
+        for host in self.task_content:
+            for res in host['reslist']:
+                for meter in res['meterlist']:
+                    print self.conn.get_data\
+                    (meter, resname=res['res_name'], hostname=host['hostname'],
+                     time_s=self._get_time_bucket()['time_s'], time_e = self._get_time_bucket()['time_e'])
+                    return self.conn.get_data\
+                    (meter, resname=res['res_name'], hostname=host['hostname'],
+                     time_s=self._get_time_bucket()['time_s'], time_e = self._get_time_bucket()['time_e'])
+
+    def getdata(self,  hostname, res_name):
+        # switch_dict = {
+        #     'default' : 'cpu.iowait.percent'
+        # }
+        # measurement = switch_dict.get('default')
+        self.conn.get_data()
+
+    def draw_report(self, urls):
+        img = []
+        file_name = self.task_id + datetime.datetime.now().\
+            strftime('%Y%m%d') + '.pdf'
+        for url in urls:
+            size = get_image_size(url)
+            I = Image(url)
+            I.drawHeight = 200 * mm
+            I.drawHeight = I.drawWidth * (float(size[1]) / float(size[0]))
+            img.append(I)
+        doc = SimpleDocTemplate(file_name, pagesize=A4)
+        doc.build(img)

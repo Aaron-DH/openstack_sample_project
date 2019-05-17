@@ -1,0 +1,19 @@
+include AUTHORS
+include ChangeLog
+include CONTRIBUTING.rst
+include HACKING.rst
+include README.rst
+include LICENSE
+include etc/*
+include setup.cfg
+include setup.py
+include tox.ini
+include report/storage/sqlalchemy/migrate_repo/migrate.cfg
+recursive-include report/locale *
+recursive-include resource *
+
+exclude .gitignore
+exclude .gitreview
+
+global-exclude *.pyc
+global-exclude *.pyo

@@ -1,0 +1,249 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2015-11-30 13:06+CST\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf8\n"
+"Content-Transfer-Encoding: utf8\n"
+"Generated-By: pygettext.py 1.5\n"
+
+msgid "Contents"
+msgstr "目录"
+
+# Monitor_task
+msgid "Server Resource Statistics"
+msgstr "服务器资源统计日报"
+
+msgid "Server_Resource_Weekly_Report"
+msgstr "服务器资源统计周报"
+
+msgid "Server_Resource_Monthly_Report"
+msgstr "服务器资源统计月报"
+
+msgid "Physical machine resource statistics"
+msgstr "物理机资源统计报表"
+
+msgid "Virtual machine resource statistics"
+msgstr "虚拟机资源统计报表"
+
+msgid "Physics Resources"
+msgstr "物理服务器"
+
+msgid "CPU Summary Data"
+msgstr "CPU统计数据"
+
+msgid "CPU Detail Data"
+msgstr "CPU详细数据"
+
+msgid "Mem Summary Data"
+msgstr "内存统计数据"
+
+msgid "Mem Detail Data"
+msgstr "内存详细数据"
+
+msgid "Nic Detail Data"
+msgstr "网卡流量数据"
+
+msgid "Disk Partition Detail Data"
+msgstr "磁盘分区详细数据"
+
+msgid "CPU Usage Percent(%)"
+msgstr "CPU使用率"
+
+msgid "Mem Utilization Details TOPN"
+msgstr "内存使用率详情TOP"
+
+msgid "CPU Utilization Details TOPN"
+msgstr "CPU使用率详情TOPN"
+
+msgid "Mem Usage Percent(%)"
+msgstr "内存使用率"
+
+msgid "Swap Usage Percent(%)"
+msgstr "交换空间使用率"
+
+msgid "Swap Space Usage Details TOPN"
+msgstr "交换空间使用率详情TOPN"
+
+msgid "Partition Usage Percent(%)"
+msgstr "磁盘分区使用率"
+
+msgid "Growth Trend Of Disk Partition Utilization"
+msgstr "磁盘分区使用率增长趋势"
+
+msgid "hostname"
+msgstr "主机名"
+
+msgid "Performance Monitoring Data"
+msgstr "性能监控数据"
+
+msgid "Summary Data Tables"
+msgstr "汇总数据表格"
+
+msgid "Disk Partition"
+msgstr "磁盘分区"
+
+
+# Alarm_task
+
+msgid "Alarm %s Chart"
+msgstr "告警%s图"
+
+msgid "resource name"
+msgstr "资源名称"
+
+msgid "Resource Name"
+msgstr "主机类型"
+
+msgid "Total Alarm"
+msgstr "告警总量"
+
+msgid "low"
+msgstr "低"
+
+msgid "moderate"
+msgstr "中"
+
+msgid "critical"
+msgstr "高"
+
+msgid "processed"
+msgstr "已处理"
+
+msgid "unprocessed"
+msgstr "未处理"
+
+msgid "ignored"
+msgstr "忽略"
+
+msgid "Alarm Summary Data"
+msgstr "告警汇总数据"
+
+msgid "host distribute"
+msgstr "告警主机分布"
+
+msgid "user distribute"
+msgstr "告警用户分布"
+
+msgid "status distribute"
+msgstr "告警状态分布"
+
+msgid "type distribute"
+msgstr "告警类型分布"
+
+msgid "severity distribute"
+msgstr "告警级别分布"
+
+msgid "time distribute"
+msgstr "告警时间分布"
+
+msgid "response time distribute"
+msgstr "响应时间"
+
+msgid "alarm detail table"
+msgstr "各主机下的告警详情"
+
+# OpenStack_Statistics_Report
+msgid "Openstack Statistics"
+msgstr "OpenStack统计报表"
+
+msgid "Resource Statistics"
+msgstr "资源统计"
+
+msgid "Physics Resource"
+msgstr "物理资源"
+
+msgid "Total CPU"
+msgstr "CPU总核数"
+
+msgid "Total Mem"
+msgstr "内存总数"
+
+msgid "Local Storage"
+msgstr "本次存储"
+
+msgid "Public IP"
+msgstr "公网IP"
+
+msgid "RBD Storage"
+msgstr "RBD存储"
+
+msgid "Virtual Resource"
+msgstr "虚拟资源"
+
+msgid "Virtual Machine"
+msgstr "虚拟机"
+
+msgid "Exchange"
+msgstr "交换机"
+
+msgid "Router"
+msgstr "路由器"
+
+msgid "Load Balance"
+msgstr "负载均衡"
+
+msgid "Cloud Disk"
+msgstr "云硬盘"
+
+msgid "User Statistics"
+msgstr "用户统计"
+
+msgid "User Resource Statistics"
+msgstr "用户资源统计"
+
+msgid "User Name"
+msgstr "用户名"
+
+msgid "Num of VM"
+msgstr "虚拟机总数"
+
+msgid "VCPUs"
+msgstr "虚拟CPU"
+
+msgid "Memory_MB"
+msgstr "内存(MB)"
+
+msgid "Disk_GB"
+msgstr "硬盘(GB)"
+
+msgid "User VM Creation Statistics"
+msgstr "用户虚拟机创建统计"
+
+msgid "Success Creation"
+msgstr "创建成功数量"
+
+msgid "Failed Creation"
+msgstr "创建失败数量"
+
+msgid "Deletion"
+msgstr "删除数量"
+
+msgid "VM Statistics"
+msgstr "虚拟机统计"
+
+msgid "Added Resources"
+msgstr "资源使用量"
+
+msgid "Flavors Distribution Of VM Creation"
+msgstr "虚拟机创建类型分布"
+
+msgid "Time Distribution Of VM Creation"
+msgstr "虚拟机创建时间分布"
+
+msgid "Status Distribution Of VM Creation"
+msgstr "虚拟机创建状态分布"
+
+# Mail
+msgid "This mail auto send by system, need not reply"
+msgstr "该邮件由系统自动发出，请勿回复"
+
+msgid "Awcloud-Report Team"
+msgstr "海云捷讯报表项目组"

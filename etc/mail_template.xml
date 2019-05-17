@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<catalog>-->
+    <!--<maxid>4</maxid>-->
+    <!--<login username="pytest" passwd='123456'>-->
+        <!--<caption>Python</caption>-->
+        <!--<item id="4">-->
+            <!--<caption>测试</caption>-->
+        <!--</item>-->
+    <!--</login>-->
+    <!--<item id="2">-->
+        <!--<caption>Zope</caption>- -->
+    <!--</item>-->
+<!--</catalog>-->
+<mail>
+    <report type="Alarm">
+        <From>海云捷迅报表项目组</From>
+        <Subject>告警报表</Subject>
+        <Content>此邮件由系统自动发出，请勿回复</Content>
+    </report>
+    <report type="Monitor">
+        <From>海云捷迅报表项目组</From>
+        <Subject>监控报表</Subject>
+        <Content>此邮件由系统自动发出，请勿回复</Content>
+    </report>
+</mail>

@@ -1,0 +1,11 @@
+[Unit]
+Description=OpenStack Report API Service
+After=syslog.target network.target mysqld.service
+
+[Service]
+Type=simple
+User=report
+ExecStart=/usr/bin/report-agent --logfile /var/log/report/report-agent.log
+
+[Install]
+WantedBy=multi-user.target
